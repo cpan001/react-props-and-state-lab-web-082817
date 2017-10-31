@@ -1,16 +1,33 @@
-import React from 'react';
+import React from "react";
 
 class Filters extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.filters.type
+    };
   }
+
+  handleClick = e => {
+    this.props.onFindPetsClick();
+  };
+
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+    this.props.onChangeType(e.target.value);
+  };
 
   render() {
     return (
       <div className="ui form">
         <h3>Animal type</h3>
         <div className="field">
-          <select name="type" id="type">
+          <select
+            name="type"
+            id="type"
+            value={this.state.value}
+            onChange={this.handleChange.bind(this)}
+          >
             <option value="all">All</option>
             <option value="cat">Cats</option>
             <option value="dog">Dogs</option>
@@ -19,7 +36,9 @@ class Filters extends React.Component {
         </div>
 
         <div className="field">
-          <button className="ui secondary button">Find pets</button>
+          <button className="ui secondary button" onClick={this.handleClick}>
+            Find pets
+          </button>
         </div>
       </div>
     );
